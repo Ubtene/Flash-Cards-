@@ -14,7 +14,7 @@ var cardGenerator = function() {
         type: "list",
         name: "flashType",
         message: "What do you want to do?",
-        choices: ["Create a basic flashcard", "Create a cloze flashcard"]
+        choices: ["Create a basic flashcard", "Create a cloze flashcard" , "Play Basic Flash Card Game"]
     }]).then(function(answers) {
 
         switch (answers.flashType) {
@@ -25,6 +25,12 @@ var cardGenerator = function() {
             case "Create a cloze flashcard":
                 clozeCreate();
                 break;
+
+            case "Play Basic Flash Card Game":
+
+                playGame();
+                break;
+
         }
     });
 };
@@ -46,7 +52,7 @@ var basicCreate = function() {
         }
 
     ]).then(function(input) {
-        var NewBasic = new basicExports.BasicFlash(input.question, input.answer).writeBasic();
+        var NewBasic = new basicExports.BasicFlash(input.question, input.answer).writeBasicJSON();
         console.log("Here is your new flashcard:" + input.question +
    input.answer)
     });
@@ -72,4 +78,110 @@ var clozeCreate = function() {
         var NewCloze = new clozeExports.ClozeFlash(input.text, input.cloze).findCloze();         
     });
 };
+
+
+var playGame = function () {
+
+fs.readFile('./basic.JSON',  'utf8' ,  function read(err, data) {
+    if (err) {
+  
+        throw err;
+    }
+  
+  // var obj = JSON.parse(data);
+
+  var array = data.split('\r\n');
+ 
+  var number = Math.round(Math.random()* array.length  - 1 );
+
+  var question = JSON.parse(array[number]).question;
+
+  var answer =JSON.parse(array[number]).answer;
+
+
+inquirer.prompt([{
+            type: "input",
+            message: question,
+            name: "text",
+            default: ""
+        },
+
+    ]).then(function(input) {
+       
+      if( input.text.toLowerCase().trim() == answer.toLowerCase().trim()) {
+
+        console.log("correct!");
+
+        playGame();
+    
+
+    }
+
+    else {
+
+        console.log("incorrect")
+        
+        playGame();
+
+      }
+
+
+    });
+
+
+
+});
+
+};
+
+
+
+
 cardGenerator();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
