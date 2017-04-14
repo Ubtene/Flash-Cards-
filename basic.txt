@@ -1,4 +1,0 @@
-{"question":"Who was george?","answer":"1st president "}
-{"question":"who was abe?","answer":"16th president"}
-{"question":"who was the 17th president?","answer":"Grant "}
-{"question":"Who came up with the monroe doctrine?","answer":"James Monroe"}

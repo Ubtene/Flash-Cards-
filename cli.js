@@ -80,24 +80,50 @@ var clozeCreate = function() {
 };
 
 
-var playGame = function () {
+
+var ultimateArray;
+
+var countingArray;
+
+var counter = 0;
+
+var correct = 0;
+
+var  incorrect = 0;
+
+
+function playGame () {
+
+ if (counter === 0 ) {
 
 fs.readFile('./basic.JSON',  'utf8' ,  function read(err, data) {
+    
     if (err) {
   
         throw err;
+
     }
-  
-  // var obj = JSON.parse(data);
 
-  var array = data.split('\r\n');
+
+var array = data.split('\r\n');
+
+ countingArray = array.length;
+
+
+ ultimateArray = array;
+
+
+
  
-  var number = Math.round(Math.random()* array.length  - 1 );
+var number = Math.round((Math.random()* array.length));
 
-  var question = JSON.parse(array[number]).question;
+var number = parseInt(number);
 
-  var answer =JSON.parse(array[number]).answer;
+var question = JSON.parse(array[number]).question;
 
+var answer =JSON.parse(array[number]).answer;
+
+ultimateArray.splice( number , 1);
 
 inquirer.prompt([{
             type: "input",
@@ -107,13 +133,17 @@ inquirer.prompt([{
         },
 
     ]).then(function(input) {
-       
+
+
       if( input.text.toLowerCase().trim() == answer.toLowerCase().trim()) {
 
         console.log("correct!");
 
+        
+        
+       counter++;
+        correct++;
         playGame();
-    
 
     }
 
@@ -121,7 +151,14 @@ inquirer.prompt([{
 
         console.log("incorrect")
         
-        playGame();
+       
+
+        counter++;
+
+        incorrect++;
+
+         playGame();
+       
 
       }
 
@@ -129,59 +166,108 @@ inquirer.prompt([{
     });
 
 
-
+//closes fs.readFile function
 });
 
+
+//closes the if statement
+} else if ( counter > 0 )  {
+
+
+if (counter < countingArray -1 ) {
+
+    
+var number2 = Math.floor(Math.abs((Math.random()* ultimateArray.length)-1));
+
+number2 = parseInt(number2);
+
+var question = JSON.parse(ultimateArray[number2]).question;
+
+var answer =JSON.parse(ultimateArray[number2]).answer;
+
+ultimateArray.splice( number2 , 1);
+
+inquirer.prompt([{
+            type: "input",
+            message: question,
+            name: "text",
+            default: ""
+        },
+
+    ]).then(function(input) {
+
+
+      if( input.text.toLowerCase().trim() === answer.toLowerCase().trim()) {
+
+        console.log("correct!");
+
+        counter++;
+        correct++;
+        playGame();
+
+    }
+
+    else {
+
+        console.log("incorrect")
+        
+       counter++;
+       incorrect++;
+       playGame();
+
+
+      }
+
+
+    });
+
+
+//closes the additional if 
+  } else {
+
+    if (correct > incorrect) {
+
+    console.log("Game over! You won! " + "Number Correct: " + correct + " Number Incorrect: " + incorrect);
+
+    }
+
+    else {
+
+         console.log("Game over! You lost! " + "Number Correct: " + correct + " Number Incorrect: " + incorrect);
+
+
+    }
+
+
+  }
+
+
+//closes the else statement
 };
 
 
 
 
+
+};  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 cardGenerator();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
