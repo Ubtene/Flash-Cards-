@@ -1,0 +1,22 @@
+{
+  "name": "flash-cards-",
+  "version": "1.0.0",
+  "description": "A basic flash card generator using node.js",
+  "main": "basicflash.js",
+  "scripts": {
+    "start": "node cli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ubtene/Flash-Cards-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ubtene/Flash-Cards-/issues"
+  },
+  "homepage": "https://github.com/Ubtene/Flash-Cards-#readme",
+  "dependencies": {
+    "inquirer": "^3.0.6"
+  }
+}
